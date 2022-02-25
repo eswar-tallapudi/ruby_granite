@@ -1,3 +1,4 @@
 class Task < ApplicationRecord
-  validates :title, presence: true, length: { maximum: 125 }
+  MAX_TITLE_LENGTH = 125
+  validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }
 end
