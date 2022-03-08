@@ -55,4 +55,3 @@ const Dashboard = ({ history }) => {
 };
 
 export default Dashboard;
-Table.jsx;
