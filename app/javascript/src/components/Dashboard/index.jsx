@@ -3,10 +3,10 @@ import { isNil, isEmpty, either } from "ramda";
 
 import Container from "components/Container";
 import Table from "components/Tasks/Table";
-import PageLoader from "components/PageLoader";
 import tasksApi from "apis/tasks";
+import PageLoader from "components/PageLoader";
 
-const Dashboard = () => {
+const Dashboard = ({ history }) => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,13 +21,17 @@ const Dashboard = () => {
     }
   };
 
+  const showTask = slug => {
+    history.push(`/tasks/${slug}/show`);
+  };
+
   useEffect(() => {
     fetchTasks();
   }, []);
 
   if (loading) {
     return (
-      <div className="w-screen h-screen">
+      <div className="h-screen w-screen">
         <PageLoader />
       </div>
     );
@@ -36,7 +40,7 @@ const Dashboard = () => {
   if (either(isNil, isEmpty)(tasks)) {
     return (
       <Container>
-        <h1 className="text-xl leading-5 text-center">
+        <h1 className="text-center text-xl leading-5">
           You have no tasks assigned 😔
         </h1>
       </Container>
@@ -45,9 +49,10 @@ const Dashboard = () => {
 
   return (
     <Container>
-      <Table data={tasks} />
+      <Table data={tasks} showTask={showTask} />
     </Container>
   );
 };
 
 export default Dashboard;
+Table.jsx;
