@@ -2,6 +2,8 @@
 
 class Task < ApplicationRecord
   MAX_TITLE_LENGTH = 125
+
+  has_many :comments, dependent: :destroy
   belongs_to :task_owner, foreign_key: "task_owner_id", class_name: "User"
 
   validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }
