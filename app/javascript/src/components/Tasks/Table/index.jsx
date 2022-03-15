@@ -1,20 +1,29 @@
 import React from "react";
-
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
 
-const Table = ({ data, showTask, destroyTask }) => {
+const Table = ({
+  type = "pending",
+  data,
+  destroyTask,
+  showTask,
+  handleProgressToggle,
+  starTask,
+}) => {
   return (
     <div className="mt-10 flex flex-col ">
       <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <div className="border-b shadow md:custom-box-shadow overflow-hidden border-gray-200">
             <table className="divide-y min-w-full divide-gray-200">
-              <TableHeader />
+              <TableHeader type={type} />
               <TableRow
                 data={data}
-                showTask={showTask}
                 destroyTask={destroyTask}
+                showTask={showTask}
+                type={type}
+                handleProgressToggle={handleProgressToggle}
+                starTask={starTask}
               />
             </table>
           </div>

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  RESTRICTED_ATTRIBUTES = %i[title task_owner_id assigned_user_id]
+  enum progress: { pending: "pending", completed: "completed" }
   MAX_TITLE_LENGTH = 125
 
   has_many :comments, dependent: :destroy
