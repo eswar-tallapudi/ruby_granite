@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  enum status: { unstarred: "unstarred", starred: "starred" }
   RESTRICTED_ATTRIBUTES = %i[title task_owner_id assigned_user_id]
   enum progress: { pending: "pending", completed: "completed" }
   MAX_TITLE_LENGTH = 125
@@ -39,5 +40,16 @@ class Task < ApplicationRecord
       if slug_changed? && self.persisted?
         errors.add(:slug, t("task.slug.immutable"))
       end
+    end
+
+    def self.of_status(progress)
+      if progress == :pending
+        starred = pending.starred.order("updated_at DESC")
+        unstarred = pending.unstarred.order("updated_at DESC")
+      else
+        starred = completed.starred.order("updated_at DESC")
+        unstarred = completed.unstarred.order("updated_at DESC")
+      end
+      starred + unstarred
     end
 end
